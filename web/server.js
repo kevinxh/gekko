@@ -61,7 +61,6 @@ router.post('/api/startGekko', require(ROUTE('startGekko')));
 router.post('/api/killGekko', require(ROUTE('killGekko')));
 router.post('/api/getCandles', require(ROUTE('getCandles')));
 
-
 // incoming WS:
 // wss.on('connection', ws => {
 //   ws.on('message', _.noop);
@@ -77,7 +76,7 @@ app
 
 server.timeout = config.api.timeout||120000;
 server.on('request', app.callback());
-server.listen(config.api.port, config.api.host, '::', () => {
+server.listen(config.api.port, () => {
   const host = `${config.ui.host}:${config.ui.port}${config.ui.path}`;
 
   if(config.ui.ssl) {
@@ -87,7 +86,6 @@ server.listen(config.api.port, config.api.host, '::', () => {
   }
 
   console.log('Serving Gekko UI on ' + location +  '\n');
-
 
   // only open a browser when running `node gekko`
   // this prevents opening the browser during development
