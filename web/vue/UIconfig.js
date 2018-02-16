@@ -6,7 +6,7 @@
 const CONFIG = {
   headless: false,
   api: {
-    host: '127.0.0.1',
+    host: 'localhost',
     port: process.env.PORT || 3000,
     timeout: 120000 // 2 minutes
   },
