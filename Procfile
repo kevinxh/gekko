@@ -1,1 +1,1 @@
-web: sudo node gekko --ui
+web: node gekko --ui
