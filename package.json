@@ -12,7 +12,8 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha test/*.js --recursive test -u tdd --reporter spec",
     "build": "bash ./bin/build.sh",
-    "start": "npm run build && node gekko --ui"
+    "start": "node gekko --ui",
+    "start-production": "npm run build && node gekko --ui"
   },
   "author": "Mike van Rossum <mike@mvr.me>",
   "dependencies": {
