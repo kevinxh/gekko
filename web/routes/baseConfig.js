@@ -47,7 +47,7 @@ config.postgresql = {
   path: 'plugins/postgresql',
   version: 0.1,
   connectionString: process.env.DATABASE_URL, // if default port
-  database: null, // if set, we'll put all tables into a single database.
+  database: process.env.DATABASE, // if set, we'll put all tables into a single database.
   schema: 'public',
   dependencies: [{
     module: 'pg',
