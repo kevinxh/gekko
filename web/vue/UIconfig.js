@@ -7,13 +7,13 @@ const CONFIG = {
   headless: false,
   api: {
     host: 'localhost',
-    port: process.env.PORT || 3000,
+    port: 3000 || 3000,
     timeout: 120000 // 2 minutes
   },
   ui: {
     ssl: false,
     host: 'localhost',
-    port: process.env.PORT || 3000,
+    port: 3000 || 3000,
     path: '/'
   },
   adapter: 'sqlite'

@@ -1,1 +1,1 @@
-web: node gekko --ui
+web: npm start
