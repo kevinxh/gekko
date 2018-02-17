@@ -9,9 +9,8 @@ var postgresUtil = require('./util');
 
 var connectionString = config.postgresql.connectionString;
 
-
 module.exports = done => {
-  var scanClient = new pg.Client(connectionString+"/postgres");
+  var scanClient = new pg.Client(connectionString);
 
   let markets = [];
 
