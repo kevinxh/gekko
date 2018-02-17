@@ -31,7 +31,7 @@ var dbName = postgresUtil.database();
 
 var mode = util.gekkoMode();
 
-var connectionString = config.postgresql.connectionString+"/postgres";
+var connectionString = config.postgresql.connectionString;
 
 var checkClient = new pg.Client(connectionString);
 var client = new pg.Client(config.postgresql.connectionString+"/"+dbName);
