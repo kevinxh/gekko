@@ -7,3 +7,4 @@ then
 fi
 sed -i "s/process.env.PORT/$PORT/g" ./web/vue/UIconfig.js
 sed -i "s/ssl: false/ssl: true/g" ./web/vue/UIconfig.js
+sed -i "s/host: 'localhost'/host: 'gekko-trade.herokuapp.com'/g" ./web/vue/UIconfig.js
