@@ -46,8 +46,8 @@ config.sqlite = {
 config.postgresql = {
   path: 'plugins/postgresql',
   version: 0.1,
-  connectionString: process.env.DATABASE_URL, // if default port
-  database: process.env.DATABASE, // if set, we'll put all tables into a single database.
+  connectionString: 'postgres://admin:FRTVUXNFJWTRETPM@aws-us-west-2-portal.1.dblayer.com:17597/compose', // if default port
+  database: 'compose', // if set, we'll put all tables into a single database.
   schema: 'public',
   dependencies: [{
     module: 'pg',

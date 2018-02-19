@@ -12,7 +12,8 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha test/*.js --recursive test -u tdd --reporter spec",
     "build": "bash ./bin/build.sh",
-    "start": "node gekko --ui",
+    "start": "cross-env PORT=3000 node gekko --ui ",
+    "start-debug": "cross-env PORT=3000 node --inspect gekko --ui ",
     "start-production": "npm run build && node gekko --ui"
   },
   "author": "Mike van Rossum <mike@mvr.me>",
@@ -31,6 +32,7 @@
     "co-fs": "^1.2.0",
     "coinfalcon": "^1.0.3",
     "commander": "^2.9.0",
+    "cross-env": "^5.1.3",
     "gdax": "^0.4.2",
     "gekko": "0.0.9",
     "gemini-exchange-coffee-api": "2.0.6",

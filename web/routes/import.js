@@ -11,6 +11,7 @@ const base = require('./baseConfig');
 // starts an import
 // requires a post body with a config object
 module.exports = function *() {
+  debugger
   let mode = 'importer';
 
   let config = {}
