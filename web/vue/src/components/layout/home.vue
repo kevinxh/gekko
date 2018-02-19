@@ -8,6 +8,7 @@
 
 <script>
 import marked from '../../tools/marked';
+import { basePath } from '../../tools/api';
 
 const left = marked(`
 
@@ -27,6 +28,11 @@ export default {
   data: () => {
     return {
       left
+    }
+  },
+  computed: {
+    imageUrl: function() {
+      return basePath + 'assets/gekko.jpg';
     }
   }
 }
