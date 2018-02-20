@@ -18,7 +18,7 @@ var reader = new Reader();
 // todo: rewrite with generators or async/await..
 var scan = function(done) {
   log.info('Scanning local history for backtestable dateranges.');
-
+  debugger
   reader.tableExists('candles', (err, exists) => {
 
     if(err)
@@ -118,7 +118,6 @@ var scan = function(done) {
                 to: r.from
               }
             });
-
 
             // ranges is now a list like
             // [ {from: unix, to: unix } ]

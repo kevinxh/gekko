@@ -61,7 +61,7 @@ var pluginHelper = {
   // @param Function next
   //    callback
   load: function(plugin, next) {
-
+    debugger
     plugin.config = config[plugin.slug];
 
     if(!plugin.config || !plugin.config.enabled)

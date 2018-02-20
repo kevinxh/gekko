@@ -15,6 +15,7 @@ module.exports = done => {
   let markets = [];
 
   scanClient.connect(function (err) {
+    debugger
     if(err){
       util.die(err);
     }
@@ -30,7 +31,7 @@ module.exports = done => {
 
       async.each(result.rows, (dbRow, next) => {
 
-        var scanTablesClient = new pg.Client(connectionString + "/" + dbRow.datname);
+        var scanTablesClient = new pg.Client(connectionString);
         var dbName = dbRow.datname;
 
         scanTablesClient.connect(function (err) {

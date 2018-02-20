@@ -10,7 +10,6 @@
 
 */
 
-
 var util = require('./util');
 var dirs = util.dirs();
 

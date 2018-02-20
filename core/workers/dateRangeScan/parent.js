@@ -6,7 +6,8 @@ module.exports = function(config, done) {
   if (debug) {
     process.execArgv = [];
   }
-
+  process.execArgv = ['--inspect=9227'];
+  debugger
   task = new ForkTask(fork(__dirname + '/child'));
 
   task.send('start', config);
