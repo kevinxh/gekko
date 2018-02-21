@@ -7,13 +7,13 @@ const CONFIG = {
   headless: false,
   api: {
     host: 'localhost',
-    port: 3000,
+    port: process.env.PORT,
     timeout: 120000 // 2 minutes
   },
   ui: {
     ssl: false,
     host: 'localhost',
-    port: 3000,
+    port: process.env.PORT,
     path: '/'
   },
   adapter: 'postgresql'
