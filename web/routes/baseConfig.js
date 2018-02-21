@@ -50,7 +50,7 @@ config.sqlite = {
 config.postgresql = {
   path: 'plugins/postgresql',
   version: 0.1,
-  connectionString: 'postgres://admin:FRTVUXNFJWTRETPM@aws-us-west-2-portal.1.dblayer.com:17597/gekko', // if default port
+  connectionString: process.env.DATABASE, // if default port
   database: 'gekko', // if set, we'll put all tables into a single database.
   schema: 'public',
   dependencies: [{
