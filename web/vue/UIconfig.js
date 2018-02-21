@@ -8,7 +8,7 @@ const CONFIG = {
   api: {
     host: 'localhost',
     port: process.env.PORT,
-    timeout: 120000 // 2 minutes
+    timeout: 1200000 // 2 minutes
   },
   ui: {
     ssl: false,
