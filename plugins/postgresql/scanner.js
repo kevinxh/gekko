@@ -15,7 +15,6 @@ module.exports = done => {
   let markets = [];
 
   scanClient.connect(function (err) {
-    debugger
     if(err){
       util.die(err);
     }

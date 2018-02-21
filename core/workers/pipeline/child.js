@@ -22,7 +22,6 @@
 
 var start = (mode, config) => {
   var util = require(__dirname + '/../../util');
-  debugger
   // force correct gekko env
   util.setGekkoEnv('child-process');
 

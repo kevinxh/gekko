@@ -5,7 +5,6 @@ var handle = require('./handle');
 var postgresUtil = require('./util');
 
 var Store = function(done, pluginMeta) {
-  debugger
   _.bindAll(this);
   this.done = done;
 
@@ -16,7 +15,6 @@ var Store = function(done, pluginMeta) {
 }
 
 Store.prototype.upsertTables = function() {
-  debugger
   var createQueries = [
     `CREATE TABLE IF NOT EXISTS
     ${postgresUtil.table('candles')} (
@@ -40,7 +38,6 @@ Store.prototype.upsertTables = function() {
 }
 
 Store.prototype.writeCandles = function() {
-  debugger
   if(_.isEmpty(this.cache)){
     return;
   }
