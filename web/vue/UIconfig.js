@@ -13,7 +13,7 @@ const CONFIG = {
   ui: {
     ssl: false,
     host: 'localhost',
-    port: null,
+    port: '',
     path: '/'
   },
   adapter: 'postgresql'
