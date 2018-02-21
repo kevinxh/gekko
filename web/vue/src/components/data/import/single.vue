@@ -18,7 +18,7 @@
           .grd-row-col-2-6 <strong>结束:</strong>
           .grd-row-col-4-6 {{ fmt(to) }}
         .grd-row(v-if='initialized')
-          .grd-row-col-2-6 <strong>直到:</strong>
+          .grd-row-col-2-6 <strong>进度:</strong>
           .grd-row-col-4-6 {{ fmt(latest) }}
         .grd-row(v-if='initialized')
           .grd-row-col-2-6 <strong>剩余:</strong>

@@ -55,7 +55,7 @@ config.postgresql = {
   schema: 'public',
   dependencies: [{
     module: 'pg',
-    version: '6.1.0'
+    version: '6.4.2'
   }]
 }
 
