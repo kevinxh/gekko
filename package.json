@@ -14,7 +14,7 @@
     "build": "bash ./bin/build.sh",
     "start": "cross-env PORT=3000 node gekko --ui ",
     "start-debug": "cross-env PORT=3000 node --inspect gekko --ui ",
-    "start-production": "npm run build && node --inspect gekko --ui"
+    "start-production": "npm run build && node --inspect=9229 gekko --ui"
   },
   "author": "Mike van Rossum <mike@mvr.me>",
   "dependencies": {
