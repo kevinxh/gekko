@@ -12,11 +12,9 @@ import marked from '../../tools/marked';
 const messages = {
   disconnected: marked(`
 
-## Disconnected
+## 连接断开
 
-Something happened to either Gekko or the connection.
-Please check the terminal where Gekko is running or
-your network connection.
+服务器连接断开，请确认网络连接。
 
   `)
 }

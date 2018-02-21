@@ -1,18 +1,18 @@
 <template lang='jade'>
 div
   .mx1
-    label(for='exchange').wrapper Exchange:
+    label(for='exchange').wrapper 交易所:
     .custom-select.button
       select(v-model='exchange')
         option(v-for='(market, e) in exchanges') {{ e }}
   .grd-row
     .grd-row-col-3-6.mx1
-      label(for='currency') Currency:
+      label(for='currency') 货币:
       .custom-select.button
         select(v-model='currency')
           option(v-for='cur in currencies') {{ cur }}
     .grd-row-col-3-6.mx1
-      label(for='asset') Asset:
+      label(for='asset') 数字货币:
       .custom-select.button
         select(v-model='asset')
           option(v-for='asst in assets') {{ asst }}

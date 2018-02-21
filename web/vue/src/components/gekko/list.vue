@@ -2,18 +2,18 @@
   .contain.py2
     .text(v-html='text')
     .hr
-    h3 Market watchers
+    h3 市场观察
     .text(v-if='!watchers.length')
-      p You are currently not watching any markets.
+      p 你现在没有在观看任何市场
     table.full.clickable(v-if='watchers.length')
       thead
         tr
-          th exchange
-          th currency
-          th asset
-          th started at
-          th last update
-          th duration
+          th 交易所
+          th 货币
+          th 数字货币
+          th 开始
+          th 上次更新
+          th 时长
       tbody
         tr.clickable(v-for='gekko in watchers', v-on:click='$router.push({path: `live-gekkos/watcher/${gekko.id}`})')
           td {{ gekko.watch.exchange }}
@@ -25,19 +25,19 @@
             template(v-if='gekko.lastCandle') {{ fmt(gekko.lastCandle.start) }}
           td
             template(v-if='gekko.firstCandle && gekko.lastCandle') {{ timespan(gekko.lastCandle.start, gekko.firstCandle.start) }}
-    h3 Strat runners
+    h3 任务
     .text(v-if='!stratrunners.length')
-      p You are currently not running any strategies.
+      p 没有正在进行的任务
     table.full(v-if='stratrunners.length')
       thead
         tr
-          th exchange
-          th currency
-          th asset
-          th last update
-          th duration
-          th strategy
-          th profit
+          th 交易所
+          th 货币
+          th 数字货币
+          th 上次更新
+          th 时长
+          th 策略
+          th 盈利
       tbody
         tr.clickable(v-for='gekko in stratrunners', v-on:click='$router.push({path: `live-gekkos/stratrunner/${gekko.id}`})')
           td {{ gekko.watch.exchange }}
@@ -52,8 +52,8 @@
             template(v-if='!gekko.report') 0
             template(v-if='gekko.report') {{ round(gekko.report.profit) }} {{ gekko.watch.currency }}
     .hr
-    h2 Start a new live Gekko
-    router-link.btn--primary(to='/live-gekkos/new') Start a new live Gekko!
+    h2 开始一个新任务
+    router-link.btn--primary(to='/live-gekkos/new') 开始一个新任务
 </template>
 
 <script>
@@ -64,9 +64,9 @@ import marked from '../../tools/marked'
 
 const text = marked(`
 
-## Live Gekko
+## 实时任务
 
-Run your strategy against the live market!
+使用你的算法来进行实时市场操作！模拟操作或者... 如果你有足够的信心
 
 `);
 

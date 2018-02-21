@@ -1,42 +1,42 @@
 <template lang='jade'>
   div.contain.my2
     div(v-if='data && !data.done')
-      h2 Importing data..
+      h2 正在导入...
       .grd
         .grd-row
-          .grd-row-col-2-6 <strong>Market:</strong>
+          .grd-row-col-2-6 <strong>市场:</strong>
           .grd-row-col-4-6 {{ data.watch.exchange }}
         .grd-row
-          .grd-row-col-2-6 <strong>Currency/Asset:</strong>
+          .grd-row-col-2-6 <strong>货币/数字货币:</strong>
           .grd-row-col-4-6 {{ data.watch.currency }}/{{ data.watch.asset }}
 
       .grd
         .grd-row
-          .grd-row-col-2-6 <strong>From:</strong>
+          .grd-row-col-2-6 <strong>开始:</strong>
           .grd-row-col-4-6 {{ fmt(from) }}
         .grd-row
-          .grd-row-col-2-6 <strong>To:</strong>
+          .grd-row-col-2-6 <strong>结束:</strong>
           .grd-row-col-4-6 {{ fmt(to) }}
         .grd-row(v-if='initialized')
-          .grd-row-col-2-6 <strong>Imported data until:</strong>
+          .grd-row-col-2-6 <strong>直到:</strong>
           .grd-row-col-4-6 {{ fmt(latest) }}
         .grd-row(v-if='initialized')
-          .grd-row-col-2-6 <strong>Remaining:</strong>
+          .grd-row-col-2-6 <strong>剩余:</strong>
           .grd-row-col-4-6 {{ fromEnd }}
       spinner(v-if='!initialized')
       .contain(v-if='initialized')
         progressBar(:progress='progress')
       p 
-        em (you don't have to wait until the import is done,
-          | you can already start 
-          router-link(to='/backtest') backtesting
+        em (你不必等待数据导入结束
+          | 你已经可以进行部分回测
+          router-link(to='/backtest') 回测
           | ).
     div(v-if='data && data.done').txt--center
-      h2 Import done
+      h2 导入结束
       p 
-        | Go and 
-        router-link(to='/backtest') backtest
-        |  with your new data!
+        | 去
+        router-link(to='/backtest') 回测
+        |  使用你的新数据。
     div(v-if='!data').txt--center
       h2 ERROR: Uknown import
       p 

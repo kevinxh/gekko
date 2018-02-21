@@ -3,7 +3,7 @@
     .grd-row-col-3-6(v-html='left')
     .grd-row-col-3-6.txt--center
       p
-        em The most valuable commodity I know of is information.
+        em Invest in your future.
 </template>
 
 <script>
@@ -12,15 +12,14 @@ import { basePath } from '../../tools/api';
 
 const left = marked(`
 
-## Gekko
+## 币圈自动化交易系统
 
-Gekko is a Bitcoin trading bot and backtesting platform that
-connects to popular Bitcoin exchanges. It is written in javascript
-and runs on nodejs.
+币圈自动化交易系统具有下列功能：
 
-[Find out more](https://gekko.wizb.it/).
-
-*Gekko is 100% open source and free, if you paid for this you have been scammed.*
+* 从各个交易所导入历史记录
+* 使用各种市场趋势指标，利用自定义的算法，和历史记录，用过去的数据测试算法成功率，显示一段时间内的所有交易记录以及初始和结束的账户金额
+* 实时虚拟自动交易算法买卖
+* 真实服务器自动交易（内测中）
 
 `);
 
@@ -37,3 +36,4 @@ export default {
   }
 }
 </script>
+

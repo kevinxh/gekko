@@ -1,38 +1,38 @@
 <template lang='jade'>
 div
-  h3 Daterange
+  h3 选择时间
   template(v-if='tab === "scan"')
     .txt--center(v-if='!scanned')
-      a.w100--s.btn--primary.scan-btn(href='#', v-on:click.prevent='scan') Scan available data
+      a.w100--s.btn--primary.scan-btn(href='#', v-on:click.prevent='scan') 扫描可用历史数据
     .txt--center(v-if='scanned == "fetching"')
-      p.scan-btn Scanning..
+      p.scan-btn 扫描中..
     template(v-if='scanned == true')
       template(v-if='ranges.length === 0')
         p
-          strong Unable to find any local data, do you have local data available for
+          strong 无法找到可用数据
             | "{{ config.watch.exchange }}:{{ config.watch.currency }}/{{ config.watch.asset }}"?
       template(v-else)
-        label(for='exchange').wrapper Run simulation over:
+        label(for='exchange').wrapper 模拟:
         form.radio.grd
           div.grd-row(v-for='(range, i) in ranges').m1
             input.grd-row-col-1-6(type='radio', :value='i', v-model='selectedRangeIndex')
             label.grd-row-col-5-6(:for='i') {{ printRange(range) }}
       p
         em
-          a(href='#', v-on:click.prevent='scan') rescan
+          a(href='#', v-on:click.prevent='scan') 重新扫描
     p.txt--center
       em
-        a(href='#', v-on:click.prevent='tab = "manual"') Or manually set a daterange
+        a(href='#', v-on:click.prevent='tab = "manual"') 手动选择时间range
   template(v-if='tab === "manual"')
     div
-      label(for='from') From:
+      label(for='from') 开始时间:
       input(v-model='from')
     div
-      label(for='to') To:
+      label(for='to') 结束时间:
       input(v-model='to')
     p.txt--center
     em
-      a(href='#', v-on:click.prevent='tab = "scan"') Or scan for a daterange
+      a(href='#', v-on:click.prevent='tab = "scan"') 扫描时间
 </template>
 
 <script>
