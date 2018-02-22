@@ -7,16 +7,16 @@ const CONFIG = {
   headless: false,
   api: {
     host: 'localhost',
-    port: process.env.PORT,
+    port: 3000,
     timeout: 1200000 // 2 minutes
   },
   ui: {
     ssl: false,
     host: 'localhost',
-    port: '',
+    port: 3000,
     path: '/'
   },
-  adapter: 'postgresql'
+  adapter: 'sqlite'
 }
 
 if(typeof window === 'undefined')
