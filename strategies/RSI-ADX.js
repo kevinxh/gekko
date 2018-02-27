@@ -21,10 +21,8 @@ var strat = {
 	{
 		this.name = 'RSI Bull and Bear + ADX';
 		this.requiredHistory = config.tradingAdvisor.historySize;
-		this.resetTrend();		
-		
-		// debug? set to flase to disable all logging/messages/stats (improves performance)
-		this.debug = false;
+		this.resetTrend();
+		this.debug = true;
 		
 		// performance
 		config.backtest.batchSize = 1000; // increase performance
@@ -54,7 +52,7 @@ var strat = {
 			};
 		}
 		
-	}, // init()
+	},
 	
 	/* RESET TREND */
 	resetTrend: function()
@@ -90,8 +88,9 @@ var strat = {
 	},
 	
 	/* CHECK */
-	check: function()
+	check: function(candle)
 	{
+		this.candle = candle;
 		// get all indicators
 		let ind = this.tulipIndicators,
 			maSlow = ind.maSlow.result.result,
@@ -105,13 +104,23 @@ var strat = {
 			rsi = ind.BEAR_RSI.result.result;
 			let rsi_hi = this.settings.BEAR_RSI_high,
 				rsi_low = this.settings.BEAR_RSI_low;
-			
+				this.candleLog();
+				log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
+				log.info(`RSI: ${rsi}`);
 			// ADX trend strength?
-			if( adx > this.settings.ADX_high ) rsi_hi = rsi_hi + 15;
-			else if( adx < this.settings.ADX_low ) rsi_low = rsi_low -5;
+			if( adx > this.settings.ADX_high ){
+				rsi_low = rsi_low - 5;
+				rsi_hi = rsi_hi - 5;
+				// log.info('strong DOWN trend!');
+				// log.info(`Time: ${this.candle.start}`);
+				// log.info(`Price: ${this.candle.close}`);
+			}
+			else if( adx < this.settings.ADX_low && rsi < rsi_low ){
+				log.info('ADX LOW, RSI LOW.');
+			}
 				
-			if( rsi > rsi_hi ) this.short();
-			else if( rsi < rsi_low ) this.long();
+			if( rsi > rsi_hi ) this.short(rsi);
+			else if( rsi < rsi_low ) this.long(rsi);
 			
 			if(this.debug) this.lowHigh( rsi, 'bear' );
 		}
@@ -120,43 +129,62 @@ var strat = {
 		else
 		{
 			rsi = ind.BULL_RSI.result.result;
+			this.candleLog();
+				log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
+				log.info(`RSI: ${rsi}`);
 			let rsi_hi = this.settings.BULL_RSI_high,
 				rsi_low = this.settings.BULL_RSI_low;
 			
 			// ADX trend strength?
-			if( adx > this.settings.ADX_high ) rsi_hi = rsi_hi + 5;		
-			else if( adx < this.settings.ADX_low ) rsi_low = rsi_low -5;
+			if( adx > this.settings.ADX_high ){
+				rsi_low = rsi_low + 5;
+				rsi_hi = rsi_hi + 5;
+				// log.info('strong UP trend!');
+				// log.info(`Time: ${this.candle.start}`);
+			}	
+			// else if( adx < this.settings.ADX_low ) rsi_low = rsi_low + 5;
 				
-			if( rsi > rsi_hi ) this.short();
-			else if( rsi < rsi_low )  this.long();
+			if( rsi > rsi_hi ) this.short(rsi);
+			else if( rsi < rsi_low )  this.long(rsi);
 			if(this.debug) this.lowHigh( rsi, 'bull' );
 		}
 		
 		// add adx low/high if debug
 		if( this.debug ) this.lowHigh( adx, 'adx');
 	
-	}, // check()
+	},
 	
 	/* LONG */
-	long: function()
+	long: function(rsi)
 	{
 		if( this.trend.direction !== 'up' ) // new trend? (only act on new trends)
 		{
 			this.resetTrend();
 			this.trend.direction = 'up';
 			this.advice('long');
-			if( this.debug ) log.info('Going long');
+			if( this.debug ){
+				log.info('BUY!!!!!!!!!!!!!!!!!!!');
+				this.candleLog();
+				log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
+				log.info(`RSI: ${rsi}`);
+				
+			}
 		}
 		
-		if( this.debug )
-		{
-			this.trend.duration++;
-			log.info('Long since', this.trend.duration, 'candle(s)');
-		}
+		// if( this.debug )
+		// {
+		// 	this.trend.duration++;
+		// 	log.info('Long since', this.trend.duration, 'candle(s)');
+		// }
+	},
+
+	candleLog: function () {
+		log.info(`Time: ${this.candle.start}`);
+		log.info(`Price: ${this.candle.close}`);
 	},
 	
 	/* SHORT */
-	short: function()
+	short: function(rsi)
 	{
 		// new trend? (else do things)
 		if( this.trend.direction !== 'down' )
@@ -164,14 +192,20 @@ var strat = {
 			this.resetTrend();
 			this.trend.direction = 'down';
 			this.advice('short');
-			if( this.debug ) log.info('Going short');
+			if( this.debug ){
+				log.info('SELL!!!!!!!!!!!!!!!!!!!');
+				this.candleLog();
+				log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
+				log.info(`RSI: ${rsi}`);
+				
+			}
 		}
 		
-		if( this.debug )
-		{
-			this.trend.duration++;
-			log.info('Short since', this.trend.duration, 'candle(s)');
-		}
+		// if( this.debug )
+		// {
+		// 	this.trend.duration++;
+		// 	log.info('Short since', this.trend.duration, 'candle(s)');
+		// }
 	},
 	
 	/* END backtest */

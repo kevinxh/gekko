@@ -1,0 +1,17 @@
+# EMA Trends
+EMA_long = 200
+EMA_short = 50
+
+# BULL
+BULL_RSI = 10
+BULL_RSI_high = 80
+BULL_RSI_low = 60
+
+# BEAR
+BEAR_RSI = 15
+BEAR_RSI_high = 50
+BEAR_RSI_low = 20
+
+# BULL/BEAR is defined by the longer SMA trends
+# if SHORT over LONG = BULL
+# if SHORT under LONG = BEAR
