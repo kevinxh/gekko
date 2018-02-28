@@ -44,7 +44,7 @@ export default {
       candleSizeUnit: 'minutes',
       rawCandleSize: 15,
 
-      strategy: 'RSI',
+      strategy: 'RSI-ADX',
       historySize: 100,
 
       rawStratParams: '',
