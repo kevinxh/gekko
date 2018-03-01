@@ -97,6 +97,10 @@ var strat = {
 			maFast = ind.maFast.result.result,
 			rsi,
 			adx = ind.ADX.result.result;
+
+			if(isNaN(adx)){
+				adx= this.settings.ADX_high + 1;
+			}
 		
 		// BEAR TREND
 		if( maFast < maSlow )
@@ -104,9 +108,9 @@ var strat = {
 			rsi = ind.BEAR_RSI.result.result;
 			let rsi_hi = this.settings.BEAR_RSI_high,
 				rsi_low = this.settings.BEAR_RSI_low;
-				this.candleLog();
-				log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
-				log.info(`RSI: ${rsi}`);
+				// this.candleLog();
+				// log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
+				// log.info(`RSI: ${rsi}`);
 			// ADX trend strength?
 			if( adx > this.settings.ADX_high ){
 				rsi_low = rsi_low - 5;
@@ -129,9 +133,9 @@ var strat = {
 		else
 		{
 			rsi = ind.BULL_RSI.result.result;
-			this.candleLog();
-				log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
-				log.info(`RSI: ${rsi}`);
+			// this.candleLog();
+			// 	log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
+			// 	log.info(`RSI: ${rsi}`);
 			let rsi_hi = this.settings.BULL_RSI_high,
 				rsi_low = this.settings.BULL_RSI_low;
 			
@@ -162,6 +166,7 @@ var strat = {
 			this.resetTrend();
 			this.trend.direction = 'up';
 			this.advice('long');
+
 			if( this.debug ){
 				log.info('BUY!!!!!!!!!!!!!!!!!!!');
 				this.candleLog();
