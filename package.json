@@ -14,7 +14,8 @@
     "build": "bash ./bin/build.sh",
     "start": "sudo node gekko --ui",
     "start-debug": "cross-env PORT=3000 node --inspect gekko --ui ",
-    "start-production": "npm run build && node --inspect=9229 gekko --ui"
+    "start-production": "npm run build && node --inspect=9229 gekko --ui",
+    "start-live": "npm node gekko --config live-config.js"
   },
   "author": "Mike van Rossum <mike@mvr.me>",
   "dependencies": {
@@ -33,6 +34,7 @@
     "coinfalcon": "^1.0.3",
     "commander": "^2.13.0",
     "cross-env": "^5.1.3",
+    "emailjs": "^1.0.5",
     "forever": "^0.15.3",
     "gdax": "^0.4.2",
     "gekko": "0.0.9",

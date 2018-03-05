@@ -16,3 +16,5 @@ BEAR_RSI_low = 25
 ADX = 3
 ADX_high = 50
 ADX_low = 20
+
+VOLATILITY = 5

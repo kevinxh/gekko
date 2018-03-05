@@ -10,8 +10,11 @@
 */
 
 // req's
+var moment = require('moment');
 var log = require ('../core/log.js');
 var config = require ('../core/util.js').getConfig();
+var BEAR = 'BEAR';
+var BULL = 'BULL';
 
 // strategy
 var strat = {
@@ -29,13 +32,20 @@ var strat = {
 		config.silent = true;
 		config.debug = false;
 		
+		this.currentTrendRSIArray = [];
+		this.currentTrendPriceArray = [];
+		this.currentTrendMADiffArray = [];
+		this.currentTrend = undefined;
+		this.adjustTrend = undefined;
+
+		this.wave = 1;
+
 		// SMA
 		this.addTulipIndicator('maSlow', 'sma', { optInTimePeriod: this.settings.SMA_long });
 		this.addTulipIndicator('maFast', 'sma', { optInTimePeriod: this.settings.SMA_short });
 		
 		// RSI
-		this.addTulipIndicator('BULL_RSI', 'rsi', { optInTimePeriod: this.settings.BULL_RSI });
-		this.addTulipIndicator('BEAR_RSI', 'rsi', { optInTimePeriod: this.settings.BEAR_RSI });
+		this.addTulipIndicator('RSI', 'rsi', { optInTimePeriod: this.settings.RSI });
 		
 		// ADX
 		this.addTulipIndicator('ADX', 'adx', { optInTimePeriod: this.settings.ADX })
@@ -95,34 +105,80 @@ var strat = {
 		let ind = this.tulipIndicators,
 			maSlow = ind.maSlow.result.result,
 			maFast = ind.maFast.result.result,
-			rsi,
-			adx = ind.ADX.result.result;
+			rsi = ind.RSI.result.result,
+			adx = ind.ADX.result.result,
+			maDiff = maFast-maSlow;
 
-			if(isNaN(adx)){
-				adx= this.settings.ADX_high + 1;
+		let rsi_hi, rsi_low;
+
+		if(isNaN(adx)){
+			adx= this.settings.ADX_high + 1;
+		}
+
+		if(this.adjustTrend === BEAR){
+			if(maFast < maSlow) {
+				this.adjustTrend = false;
+				this.isTrendReversed = true;
 			}
+			this.currentTrend = BEAR;
+		}else if(this.adjustTrend === BULL){
+			if(maFast > maSlow) {
+				this.adjustTrend = false;
+				this.isTrendReversed = true;
+			}
+			this.currentTrend = BULL;
+		}else if(maFast < maSlow){
+			this.isTrendReversed = this.currentTrend !== BEAR;
+			this.currentTrend = BEAR;
+		} else if (maFast > maSlow){
+			this.isTrendReversed = this.currentTrend !== BULL;
+			this.currentTrend = BULL;
+		}
+
+		if(this.isTrendReversed){
+			if (this.currentTrendRSIArray.length) {
+				var sum = this.currentTrendRSIArray ? this.currentTrendRSIArray.reduce((a,b) => a+b) : 0,
+					avg = sum / this.currentTrendRSIArray.length;
+				console.log('Previous trend avg:', avg);
+				console.log('Previous trend highest:', this.currentTrendHigh);
+				console.log(this.wave++);
+			}
+			this.adjustTrend = false;
+			this.currentTrendRSIArray = [];
+			this.currentTrendMADiffArray = [];
+			this.currentTrendHigh = maDiff;
+			this.trendStartTime = candle.start;
+		}
+
+		// set the beginning trend
+		if(!this.currentTrendMADiffArray) {
+			this.currentTrendMADiffArray = [];
+		}
+
+		this.currentTrendMADiffArray.push(maDiff);
+		this.currentTrendRSIArray.push(rsi);
+
+		if(this.adjustTrend){
+			console.log(this.adjustTrend);
+			console.log(candle.start);
+		}
 		
 		// BEAR TREND
-		if( maFast < maSlow )
+		if( this.currentTrend === BEAR )
 		{
-			rsi = ind.BEAR_RSI.result.result;
-			let rsi_hi = this.settings.BEAR_RSI_high,
-				rsi_low = this.settings.BEAR_RSI_low;
-				// this.candleLog();
-				// log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
-				// log.info(`RSI: ${rsi}`);
+			if (rsi > 75) {
+				this.adjustTrend = BULL;
+			}
+			rsi_hi = this.settings.BEAR_RSI_high,
+			rsi_low = this.settings.BEAR_RSI_low;
+			if(maDiff < this.currentTrendHigh) this.currentTrendHigh = maDiff;
+			
 			// ADX trend strength?
 			if( adx > this.settings.ADX_high ){
-				rsi_low = rsi_low - 5;
-				rsi_hi = rsi_hi - 5;
-				// log.info('strong DOWN trend!');
-				// log.info(`Time: ${this.candle.start}`);
-				// log.info(`Price: ${this.candle.close}`);
+				rsi_low = rsi_low - this.settings.VOLATILITY;
+				rsi_hi = rsi_hi - this.settings.VOLATILITY;
 			}
-			else if( adx < this.settings.ADX_low && rsi < rsi_low ){
-				log.info('ADX LOW, RSI LOW.');
-			}
-				
+			
 			if( rsi > rsi_hi ) this.short(rsi);
 			else if( rsi < rsi_low ) this.long(rsi);
 			
@@ -131,22 +187,20 @@ var strat = {
 
 		// BULL TREND
 		else
-		{
-			rsi = ind.BULL_RSI.result.result;
-			// this.candleLog();
-			// 	log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
-			// 	log.info(`RSI: ${rsi}`);
-			let rsi_hi = this.settings.BULL_RSI_high,
-				rsi_low = this.settings.BULL_RSI_low;
+		{	
+			rsi_hi = this.settings.BULL_RSI_high,
+			rsi_low = this.settings.BULL_RSI_low;
+			if (rsi < 20) {
+				this.adjustTrend = BEAR;
+			}
+			
+			if(maDiff > this.currentTrendHigh) this.currentTrendHigh = maDiff;
 			
 			// ADX trend strength?
 			if( adx > this.settings.ADX_high ){
-				rsi_low = rsi_low + 5;
-				rsi_hi = rsi_hi + 5;
-				// log.info('strong UP trend!');
-				// log.info(`Time: ${this.candle.start}`);
+				rsi_low = rsi_low + this.settings.VOLATILITY;
+				rsi_hi = rsi_hi + this.settings.VOLATILITY;
 			}	
-			// else if( adx < this.settings.ADX_low ) rsi_low = rsi_low + 5;
 				
 			if( rsi > rsi_hi ) this.short(rsi);
 			else if( rsi < rsi_low )  this.long(rsi);
@@ -167,20 +221,13 @@ var strat = {
 			this.trend.direction = 'up';
 			this.advice('long');
 
-			if( this.debug ){
-				log.info('BUY!!!!!!!!!!!!!!!!!!!');
-				this.candleLog();
-				log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
-				log.info(`RSI: ${rsi}`);
-				
-			}
+			// if( this.debug ){
+			// 	log.info('BUY!!!!!!!!!!!!!!!!!!!');
+			// 	this.candleLog();
+			// 	log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
+			// 	log.info(`RSI: ${rsi}`);
+			// }
 		}
-		
-		// if( this.debug )
-		// {
-		// 	this.trend.duration++;
-		// 	log.info('Long since', this.trend.duration, 'candle(s)');
-		// }
 	},
 
 	candleLog: function () {
@@ -197,20 +244,13 @@ var strat = {
 			this.resetTrend();
 			this.trend.direction = 'down';
 			this.advice('short');
-			if( this.debug ){
-				log.info('SELL!!!!!!!!!!!!!!!!!!!');
-				this.candleLog();
-				log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
-				log.info(`RSI: ${rsi}`);
-				
-			}
+			// if( this.debug ){
+			// 	log.info('SELL!!!!!!!!!!!!!!!!!!!');
+			// 	this.candleLog();
+			// 	log.info(`ADX: ${this.tulipIndicators.ADX.result.result}`);
+			// 	log.info(`RSI: ${rsi}`);
+			// }
 		}
-		
-		// if( this.debug )
-		// {
-		// 	this.trend.duration++;
-		// 	log.info('Short since', this.trend.duration, 'candle(s)');
-		// }
 	},
 	
 	/* END backtest */
