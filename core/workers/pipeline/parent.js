@@ -5,7 +5,9 @@ module.exports = (mode, config, callback) => {
   if (debug) {
     process.execArgv = [];
   }
-
+  // process.execArgv = ['--inspect=9228'];
+  // process.execArgv = [];
+  // debugger
   var child = fork(__dirname + '/child');
 
   // How we should handle client messages depends

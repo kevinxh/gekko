@@ -1,11 +1,11 @@
 <template lang='jade'>
 div
-  h3 Daterange
+  h3 选择时间
   div
-    label(for='from') From
+    label(for='from') 开始
     input(v-model='from')
   div
-    label(for='to') To
+    label(for='to') 结束
     input(v-model='to')
 </template>
 

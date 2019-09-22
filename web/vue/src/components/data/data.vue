@@ -2,28 +2,28 @@
   .contain
     .text(v-html='intro')
     .hr
-    h2 Available datasets
+    h2 现有数据
     .txt--center.my2(v-if='datasetScanstate === "idle"')
-      a.w100--s.btn--primary.scan-btn(href='#', v-on:click.prevent='scan') Scan available data
+      a.w100--s.btn--primary.scan-btn(href='#', v-on:click.prevent='scan') 扫描现有数据
     .txt--center.my2(v-if='datasetScanstate === "scanning"')
       spinner
     .my2(v-if='datasetScanstate === "scanned"')
       .bg--orange.p1.warning.my1(v-if='unscannableMakets.length')
-        p.clickable(v-if='!viewUnscannable', v-on:click.prevent='toggleUnscannable') Some markets were unscannable, click here for details.
+        p.clickable(v-if='!viewUnscannable', v-on:click.prevent='toggleUnscannable') 有些数据有问题：
         template(v-if='viewUnscannable')
-          p Unable to find datasets in the following markets:
+          p 无法找到数据：
           .mx2(v-for='market in unscannableMakets')
             | - {{ market.exchange }}:{{ market.currency }}:{{ market.asset }}
       template(v-if='datasets.length')
         table.full.data
           thead
             tr
-              th exchange
-              th currency
-              th asset
-              th from
-              th to
-              th duration
+              th 交易所
+              th 货币
+              th 数字货币
+              th 开始
+              th 结束
+              th 时长
           tbody
             tr(v-for='set in datasets')
               td {{ set.exchange }}
@@ -33,11 +33,11 @@
               td {{ fmt(set.to) }}
               td {{ humanizeDuration(set.to.diff(set.from)) }}
       template(v-if='!datasets.length')
-        p It looks like you don't have any local data yet.
+        p 没有可用数据。
     .my2
-      h2 Import more data
-      p.text You can easily import more market data directly from exchanges using the importer.
-      router-link.btn--primary(to='/data/importer') Go to the importer!
+      h2 导入数据
+      p.text 你可以使用这个功能轻松导入交易所以往数据
+      router-link.btn--primary(to='/data/importer') 去导入
 </template>
 
 <script>
@@ -50,11 +50,10 @@ import dataset from '../global/mixins/dataset'
 
 let intro = marked(`
 
-## Local data
+## 现有数据
 
-Gekko needs local market data in order to backtest strategies. The local
-data can also be used in a warmup period when running a strategy against a
-live market.
+此系统需要市场数据才可以进行回测测试。如果你想开始实施虚拟交易，现有数据也可以作为开始之前的基准。
+
 
 `);
 

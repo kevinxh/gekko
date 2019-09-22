@@ -1,8 +1,8 @@
 <template lang='jade'>
 div
-  h3 Select a dataset
+  h3 选择数据
   .txt--center.my2(v-if='datasetScanstate === "idle"')
-    a.w100--s.btn--primary.scan-btn(href='#', v-on:click.prevent='scan') Scan available data
+    a.w100--s.btn--primary.scan-btn(href='#', v-on:click.prevent='scan') 扫描可用历史数据
   .txt--center.my2(v-if='datasetScanstate === "scanning"')
     spinner
   .my2(v-if='datasetScanstate === "scanned"')
@@ -12,12 +12,12 @@ div
         thead
           tr
             th 
-            th exchange
-            th currency
-            th asset
-            th from
-            th to
-            th duration
+            th 交易所
+            th 货币
+            th 数字货币
+            th 开始时间
+            th 结束时间
+            th 时长
         tbody
           tr(v-for='(set, i) in datasets')
             td.radio
@@ -34,17 +34,17 @@ div
               label(v-bind:for='set.id') {{ fmt(set.to) }}
             td
               label(v-bind:for='set.id') {{ humanizeDuration(set.to.diff(set.from)) }}
-      a.btn--primary(href='#', v-on:click.prevent='openRange', v-if='!rangeVisible') Adjust range
+      a.btn--primary(href='#', v-on:click.prevent='openRange', v-if='!rangeVisible') 调整时间
       template(v-if='rangeVisible')
         div
-          label(for='customFrom') From:
+          label(for='customFrom') 开始时间:
           input(v-model='customFrom')
         div
-          label(for='customTo') To:
+          label(for='customTo') 结束时间:
           input(v-model='customTo')
 
-    em(v-else) No Data found 
-      a(href='#/data/importer') Lets add some
+    em(v-else) 没有找到数据
+      a(href='#/data/importer') 导入
 
 </template>
 

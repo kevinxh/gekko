@@ -2,7 +2,7 @@
   div
     .hr.contain
     div.contain
-      h3 Backtest result
+      h3 回测结果
     result-summary(:report='result.report')
     .hr.contain
     chart(:data='result', height='500')

@@ -5,22 +5,22 @@ div.contain
     .grd-row-col-3-6
       table.p1
         tr
-          th start time
+          th 开始时间
           td {{ report.startTime }}
         tr
-          th end time
+          th 结束时间
           td {{ report.endTime }}
         tr
-          th timespan
+          th 时长
           td {{ report.timespan }}
         tr
-          th start price
+          th 开始价格
           td {{ round(report.startPrice) }} {{ report.currency }}
         tr
-          th end price
+          th 结束价格
           td {{ round(report.endPrice) }} {{ report.currency }}
         tr
-          th market
+          th 市场
           td {{ round(report.market) }}%
 
     paperTradeSummary(:report='report')

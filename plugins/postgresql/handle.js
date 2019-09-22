@@ -31,10 +31,11 @@ var dbName = postgresUtil.database();
 
 var mode = util.gekkoMode();
 
-var connectionString = config.postgresql.connectionString+"/postgres";
+var connectionString = config.postgresql.connectionString;
 
 var checkClient = new pg.Client(connectionString);
-var client = new pg.Client(config.postgresql.connectionString+"/"+dbName);
+// var client = new pg.Client(config.postgresql.connectionString+"/"+dbName);
+var client = new pg.Client(config.postgresql.connectionString);
 
 /* Postgres does not have 'create database if not exists' so we need to check if the db exists first.
 This requires connecting to the default postgres database first. Your postgres user will need appropriate rights. */
