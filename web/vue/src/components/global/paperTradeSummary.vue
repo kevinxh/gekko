@@ -2,19 +2,19 @@
 .grd-row-col-3-6
   table.p1
     tr
-      th amount of trades
+      th 交易次数
       td {{ report.trades }}
     tr
       th sharpe ratio
       td {{ round2(report.sharpe) }}
     tr
-      th start balance
+      th 起始账户金额
       td {{ round(report.startBalance) }} {{ report.currency }}
     tr
-      th final balance
+      th 结束账户金额
       td {{ round(report.balance) }} {{ report.currency }}
     tr
-      th simulated profit
+      th 模拟得出的盈利
 
   .big.txt--right.price(:class='profitClass') {{ round(report.relativeProfit) }}%
 

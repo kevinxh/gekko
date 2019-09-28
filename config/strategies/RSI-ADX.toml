@@ -1,0 +1,18 @@
+# SMA Trends
+SMA_long = 200
+SMA_short = 50
+
+# BULL
+BULL_RSI = 15
+BULL_RSI_high = 75
+BULL_RSI_low = 45
+
+# BEAR
+BEAR_RSI = 15
+BEAR_RSI_high = 49
+BEAR_RSI_low = 25
+
+# ADX
+ADX = 3
+ADX_high = 50
+ADX_low = 20

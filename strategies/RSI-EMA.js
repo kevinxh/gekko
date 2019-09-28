@@ -1,14 +1,3 @@
-/*
-	RSI Bull and Bear
-	Use different RSI-strategies depending on a longer trend
-	3 feb 2017
-	
-	(CC-BY-SA 4.0) Tommie Hansen
-	https://creativecommons.org/licenses/by-sa/4.0/
-	
-*/
-
-// req's
 var log = require ('../core/log.js');
 var config = require ('../core/util.js').getConfig();
 
@@ -18,7 +7,7 @@ var strat = {
 	/* INIT */
 	init: function()
 	{
-		this.name = 'RSI Bull and Bear';
+		this.name = 'RSI-EMA';
 		this.requiredHistory = config.tradingAdvisor.historySize;
 		this.resetTrend();		
 		
@@ -31,8 +20,8 @@ var strat = {
 		config.debug = false;
 		
 		// add indicators
-		this.addTulipIndicator('maSlow', 'sma', { optInTimePeriod: this.settings.SMA_long });
-		this.addTulipIndicator('maFast', 'sma', { optInTimePeriod: this.settings.SMA_short });
+		this.addTulipIndicator('maSlow', 'ema', { optInTimePeriod: this.settings.EMA_long });
+		this.addTulipIndicator('maFast', 'ema', { optInTimePeriod: this.settings.EMA_short });
 		this.addTulipIndicator('BULL_RSI', 'rsi', { optInTimePeriod: this.settings.BULL_RSI });
 		this.addTulipIndicator('BEAR_RSI', 'rsi', { optInTimePeriod: this.settings.BEAR_RSI });
 		

@@ -1,6 +1,6 @@
-# SMA Trends
-SMA_long = 200
-SMA_short = 50
+# EMA Trends
+EMA_long = 200
+EMA_short = 50
 
 # BULL
 BULL_RSI = 10

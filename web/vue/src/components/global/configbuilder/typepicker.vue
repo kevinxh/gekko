@@ -1,8 +1,8 @@
 <template lang='jade'>
 div
-  h3 Type
+  h3 种类
   template
-    label(for='type').wrapper What do you want to do with gekko?
+    label(for='type').wrapper 你想使用哪种功能?
     form.radio.grd
       div.grd-row(v-for='(type, i) in types').m1
         input.grd-row-col-1-6(type='radio', :value='i', v-model='selectedTypeIndex')

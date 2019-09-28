@@ -11,7 +11,10 @@
   ],
   "scripts": {
     "test": "./node_modules/.bin/mocha test/*.js --recursive test -u tdd --reporter spec",
-    "start": "node ./gekko --config config.js --ui"
+    "build": "bash ./bin/build.sh",
+    "start": "sudo node gekko --ui",
+    "start-debug": "cross-env PORT=3000 node --inspect gekko --ui ",
+    "start-production": "npm run build && node --inspect=9229 gekko --ui"
   },
   "author": "Mike van Rossum <mike@mvr.me>",
   "dependencies": {
@@ -29,6 +32,8 @@
     "co-fs": "^1.2.0",
     "coinfalcon": "^1.0.3",
     "commander": "^2.13.0",
+    "cross-env": "^5.1.3",
+    "forever": "^0.15.3",
     "gdax": "^0.4.2",
     "gekko": "0.0.9",
     "gemini-exchange-coffee-api": "2.0.6",
@@ -47,6 +52,7 @@
     "node.bittrex.api": "^0.4.3",
     "okcoin-china": "0.0.7",
     "opn": "^4.0.2",
+    "pg": "^6.4.2",
     "poloniex.js": "0.0.7",
     "promisify-node": "^0.4.0",
     "prompt-lite": "0.1.1",

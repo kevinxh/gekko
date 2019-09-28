@@ -4,16 +4,16 @@
 // see https://github.com/askmike/gekko/blob/stable/docs/installing_gekko_on_a_server.md
 
 const CONFIG = {
-  headless: false,
+  headless: true,
   api: {
-    host: '127.0.0.1',
-    port: 3000,
-    timeout: 120000 // 2 minutes
+    host: '0.0.0.0',
+    port: 80,
+    timeout: 1200000 // 2 minutes
   },
   ui: {
     ssl: false,
-    host: 'localhost',
-    port: 3000,
+    host: 'ec2-54-201-252-137.us-west-2.compute.amazonaws.com',
+    port: '',
     path: '/'
   },
   adapter: 'sqlite'

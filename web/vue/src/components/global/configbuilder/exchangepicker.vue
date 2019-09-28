@@ -1,7 +1,7 @@
 <template lang='jade'>
 div
   .mx1
-    label(for='exchange').wrapper Exchange:
+    label(for='exchange').wrapper 交易所:
     .custom-select.button
       select(v-model='exchange')
         option(v-for='(market, e) in exchanges') {{ e }}

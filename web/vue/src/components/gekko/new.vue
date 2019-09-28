@@ -1,10 +1,10 @@
 <template lang='jade'>
   div.contain.my2
-    h3 Start a new gekko
+    h3 开始一个新任务
     gekko-config-builder(v-on:config='updateConfig')
     .hr
     .txt--center(v-if='config.valid')
-      a.w100--s.my1.btn--primary(href='#', v-on:click.prevent='start') Start
+      a.w100--s.my1.btn--primary(href='#', v-on:click.prevent='start') 开始
 </template>
 
 <script>

@@ -1,16 +1,16 @@
 <template lang='jade'>
   .contain.roundtrips
-    h2 Roundtrips
+    h2 买卖记录
     table(v-if='roundtrips.length')
       thead
         tr
-          th Entry at (UTC)
-          th Exit at (UTC)
-          th Exposure
-          th Entry balance
-          th Exit balance
+          th 买入 (UTC)
+          th 卖出 (UTC)
+          th 时长
+          th 买入时账户金额
+          th 卖出时账户金额
           th P&amp;L
-          th Profit
+          th 盈利
         tr(v-for='rt in roundtrips')
           td {{ fmt(rt.entryAt) }}
           td {{ fmt(rt.exitAt) }}
@@ -24,7 +24,7 @@
             td.profit {{ rt.pnl.toFixed(2) }}
             td.profit {{ rt.profit.toFixed(2) }}%
     div(v-if='!roundtrips.length')
-      p Not enough data to display
+      p 没有足够记录
 </template>
 
 <script>
